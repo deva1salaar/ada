@@ -1,0 +1,39 @@
+#include <stdio.h>
+
+void warshall(int A[][10], int n) {
+    for (int k = 0; k < n; k++) {        
+        for (int i = 0; i < n; i++) {    
+            for (int j = 0; j < n; j++) {
+                A[i][j] = A[i][j] || (A[i][k] && A[k][j]);
+            }
+        }
+    }
+}
+
+int main() {
+    int n, adj[10][10];
+
+    printf("Enter the number of vertices: ");
+    scanf("%d", &n);
+
+    printf("Enter the adjacency matrix (0 or 1):\n");
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            scanf("%d", &adj[i][j]);
+        }
+    }
+
+    
+    warshall(adj, n);
+
+   
+    printf("\nTransitive Closure of the given graph is:\n");
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            printf("%d ", adj[i][j]);
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
