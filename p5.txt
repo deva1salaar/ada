@@ -1,0 +1,52 @@
+#include <stdio.h>
+int cost[10][10], n, in_degree[10];
+void calculate_in_degree() {
+for (int j = 0; j < n; j++) {
+in_degree[j] = 0;
+for (int i = 0; i < n; i++) {
+in_degree[j] += cost[i][j]; //in_degree[j] = in_degree[j] + cost[i][j]
+        }
+    }
+}
+
+void source_removal() {
+    int select[10] = {0};  
+    printf("Topological ordering is: ");
+    
+    for (int i = 0; i < n; i++) {
+        calculate_in_degree(); 
+        
+        int found = 0;
+        for (int j = 0; j < n; j++) {
+            if (select[j] == 0 && in_degree[j] == 0) {
+                printf("%d ", j);
+                select[j] = 1;
+                
+                for (int k = 0; k < n; k++) {
+                    cost[j][k] = 0; 
+                }
+                
+                found = 1;
+                break;
+            }
+        }
+
+        if (!found) {
+            printf("\nCycle detected! Topological sorting not possible.\n");
+            return;
+        }
+    }
+}
+
+int main() {
+    printf("Enter number of vertices: ");
+    scanf("%d", &n);
+    
+    printf("Enter adjacency matrix:\n");
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < n; j++)
+            scanf("%d", &cost[i][j]);
+
+    source_removal();
+    return 0;
+}
