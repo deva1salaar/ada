@@ -1,0 +1,46 @@
+#include <stdio.h>
+#define MAX 100  
+int subset[MAX]; 
+void findSubset(int arr[], int n, int sum, int index, int subsetSize) {
+    if (sum == 0) 
+    { 
+        printf("Subset found: ");
+        for (int i = 0; i < subsetSize; i++) {
+            printf("%d ", subset[i]);
+        }
+        printf("\n");
+        return;
+    }
+    
+    if (index == n || sum < 0) { 
+        return;
+    }
+
+    
+    subset[subsetSize] = arr[index];
+    findSubset(arr, n, sum - arr[index], index + 1, subsetSize + 1);
+
+    
+    findSubset(arr, n, sum, index + 1, subsetSize);
+}
+int main() {
+    int n, sum;
+    
+    printf("Enter the number of elements in the array: ");
+    scanf("%d", &n);
+
+    int arr[MAX];
+
+    printf("Enter the elements of the array: ");
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &arr[i]);
+    }
+
+    printf("Enter the target sum: ");
+    scanf("%d", &sum);
+
+    printf("Subsets with sum %d are:\n", sum);
+    findSubset(arr, n, sum, 0, 0);
+
+    return 0;
+}
