@@ -1,0 +1,40 @@
+#include <stdio.h>
+#include <stdlib.h> 
+#define MAX 10
+int board[MAX], count = 0;
+int isSafe(int row, int col) {
+    for (int i = 1; i < row; i++) {
+        if (board[i] == col || abs(board[i] - col) == abs(i - row))
+            return 0;
+    }
+    return 1;
+}
+void printSolution(int n) {
+    count++;
+    printf("\nSolution %d:\n", count);
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= n; j++) {
+            printf("%c ", board[i] == j ? 'Q' : '.');
+        }
+        printf("\n");
+    }
+}
+void solve(int row, int n) {
+    for (int col = 1; col <= n; col++) {
+        if (isSafe(row, col)) {
+            board[row] = col;
+            if (row == n)
+                printSolution(n);
+            else
+                solve(row + 1, n);
+        }
+    }
+}
+int main() {
+    int n;
+    printf("Enter the size of the chessboard (e.g., 4, 5, 6): ");
+    scanf("%d", &n);
+    solve(1, n);
+    printf("\nTotal solutions: %d\n", count);
+    return 0;
+}
